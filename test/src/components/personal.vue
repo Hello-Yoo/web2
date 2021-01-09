@@ -133,27 +133,31 @@
                             width="400"
                             trigger="click"
                           >
-                            <el-table :data="gridData">
-                              <el-table-column
-                                width="150"
-                                property="date"
-                                label="日期"
-                              ></el-table-column>
+                            <el-table :data="order_detail">
+                              <el-table-column width="150" label="商品"
+                                ><template slot-scope="scope">
+                                  <el-image
+                                    style="width: 100px; height: 100px"
+                                    :src="scope.row.goodsImgUrl"
+                                    fit="contain"
+                                  ></el-image>
+                                </template>
+                              </el-table-column>
                               <el-table-column
                                 width="100"
-                                property="name"
-                                label="姓名"
+                                property="goodsName"
+                                label="商品名称"
                               ></el-table-column>
                               <el-table-column
                                 width="300"
-                                property="address"
-                                label="地址"
+                                property="amount"
+                                label="商品数量"
                               ></el-table-column>
                             </el-table>
                             <el-button
                               type="text"
                               class="button"
-                              @click="select()"
+                              @click="select(item.orderNumber)"
                               slot="reference"
                               >查看</el-button
                             >
@@ -184,17 +188,55 @@
                     :key="o"
                     :offset="index > 0 ? 2 : 0"
                   >
-                    <el-card :body-style="{ padding: '0px' }">
-                      <img
-                        src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                        class="image"
-                      />
+                    <el-card
+                      :body-style="{ padding: '0px' }"
+                      v-for="(item, index) in wait_order"
+                      :key="index"
+                    >
+                      <img :src="item.goodsImgUrl" class="image" />
                       <div style="padding: 14px">
-                        <span>好吃的汉堡</span>
+                        <span>订单编号:{{ item.orderNumber }}</span>
+                        <time class="time">{{ item.createTime }}</time>
+                        <span></span>
                         <div class="bottom clearfix">
-                          <time class="time">{{ currentDate }}</time>
-                          <el-button type="text" class="button">查看</el-button>
-                          <el-button type="text" class="button"
+                          <el-popover
+                            placement="right"
+                            width="400"
+                            trigger="click"
+                          >
+                            <el-table :data="order_detail">
+                              <el-table-column width="150" label="商品"
+                                ><template slot-scope="scope">
+                                  <el-image
+                                    style="width: 100px; height: 100px"
+                                    :src="scope.row.goodsImgUrl"
+                                    fit="contain"
+                                  ></el-image>
+                                </template>
+                              </el-table-column>
+                              <el-table-column
+                                width="100"
+                                property="goodsName"
+                                label="商品名称"
+                              ></el-table-column>
+                              <el-table-column
+                                width="300"
+                                property="amount"
+                                label="商品数量"
+                              ></el-table-column>
+                            </el-table>
+                            <el-button
+                              type="text"
+                              class="button"
+                              @click="select(item.orderNumber)"
+                              slot="reference"
+                              >查看</el-button
+                            >
+                          </el-popover>
+                          <el-button
+                            type="text"
+                            class="button"
+                            @click="cancle(item.orderNumber)"
                             >申请退款</el-button
                           >
                         </div>
@@ -230,31 +272,7 @@
                   </el-col>
                 </el-row></el-tab-pane
               >
-              <el-tab-pane label="待退款"
-                ><el-row>
-                  <el-col
-                    :span="8"
-                    v-for="(o, index) in 2"
-                    :key="o"
-                    :offset="index > 0 ? 2 : 0"
-                  >
-                    <el-card :body-style="{ padding: '0px' }">
-                      <img
-                        src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                        class="image"
-                      />
-                      <div style="padding: 14px">
-                        <span>好吃的汉堡</span>
-                        <div class="bottom clearfix">
-                          <time class="time">{{ currentDate }}</time>
-                          <el-button type="text" class="button">查看</el-button>
-                          <el-button type="text" class="button">取消</el-button>
-                        </div>
-                      </div>
-                    </el-card>
-                  </el-col>
-                </el-row></el-tab-pane
-              >
+
               <el-tab-pane label="已收货"
                 ><el-row>
                   <el-col
@@ -290,16 +308,51 @@
                     :key="o"
                     :offset="index > 0 ? 2 : 0"
                   >
-                    <el-card :body-style="{ padding: '0px' }">
-                      <img
-                        src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
-                        class="image"
-                      />
+                    <el-card
+                      :body-style="{ padding: '0px' }"
+                      v-for="(item, index) in cancled_order"
+                      :key="index"
+                    >
+                      <img :src="item.goodsImgUrl" class="image" />
                       <div style="padding: 14px">
-                        <span>好吃的汉堡</span>
+                        <span>订单编号:{{ item.orderNumber }}</span>
+                        <time class="time">{{ item.createTime }}</time>
+                        <span></span>
                         <div class="bottom clearfix">
-                          <time class="time">{{ currentDate }}</time>
-                          <el-button type="text" class="button">查看</el-button>
+                          <el-popover
+                            placement="right"
+                            width="400"
+                            trigger="click"
+                          >
+                            <el-table :data="order_detail">
+                              <el-table-column width="150" label="商品"
+                                ><template slot-scope="scope">
+                                  <el-image
+                                    style="width: 100px; height: 100px"
+                                    :src="scope.row.goodsImgUrl"
+                                    fit="contain"
+                                  ></el-image>
+                                </template>
+                              </el-table-column>
+                              <el-table-column
+                                width="100"
+                                property="goodsName"
+                                label="商品名称"
+                              ></el-table-column>
+                              <el-table-column
+                                width="300"
+                                property="amount"
+                                label="商品数量"
+                              ></el-table-column>
+                            </el-table>
+                            <el-button
+                              type="text"
+                              class="button"
+                              @click="select(item.orderNumber)"
+                              slot="reference"
+                              >查看</el-button
+                            >
+                          </el-popover>
                         </div>
                       </div>
                     </el-card>
@@ -450,6 +503,9 @@ export default {
       input: "",
       order_detail: [],
       order_list: [],
+      wait_order: [],
+      cancled_order: [],
+
       gridData: [
         {
           date: "2016-05-02",
@@ -526,23 +582,63 @@ export default {
       .catch((error) => {
         console.log(error);
       });
+    //获取待发货订单
+    axios({
+      method: "get",
+      url: this.globalAPI.order,
+      headers: {
+        accesstoken: sessionStorage.accesstoken,
+      },
+      params: {
+        status: 1,
+      },
+    })
+      .then((ref) => {
+        console.log("获取订单列表");
+        this.wait_order = ref.data.data;
+        console.log(ref);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    //获取已退款订单
+    axios({
+      method: "get",
+      url: this.globalAPI.order,
+      headers: {
+        accesstoken: sessionStorage.accesstoken,
+      },
+      params: {
+        status: 5,
+      },
+    })
+      .then((ref) => {
+        console.log("获取订单列表");
+        this.cancled_order = ref.data.data;
+        console.log(ref);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
   methods: {
     handleClick(tab, event) {
       console.log(tab, event);
     },
-    select() {
+    select(x) {
+      console.log(x);
       axios({
         method: "get",
         url: this.globalAPI.order_detail,
         params: {
-          orderNumber: this,
+          orderNumber: x,
         },
         headers: {
           accesstoken: sessionStorage.accesstoken,
         },
       })
         .then((ref) => {
+          this.order_detail = ref.data.data.orderItemList;
           console.log("获取订单详情");
           console.log(ref);
         })
@@ -552,15 +648,15 @@ export default {
     },
 
     cancle(x) {
-      
+      console.log(sessionStorage.accesstoken);
       axios({
         method: "post",
         url: this.globalAPI.order_cancle,
         headers: {
           accesstoken: sessionStorage.accesstoken,
         },
-        data:{
-          orderNumber:x,
+        params: {
+          orderNumber: x,
         },
       })
         .then((ref) => {
@@ -573,22 +669,39 @@ export default {
         });
     },
     pay(x) {
-      axios({
-        method: "post",
-        url: this.globalAPI.order_pay,
-        headers: {
-          accesstoken: sessionStorage.accesstoken,
-        },
-        data: {
-          orderNumber: x,
-        },
+      this.$confirm("确定支付？", "提示", {
+        confirmButtonText: "确定",
+        cancelButtonText: "取消",
+        type: "warning",
       })
-        .then((ref) => {
-          console.log("支付订单");
-          console.log(ref);
+        .then(() => {
+          this.$message({
+            type: "success",
+            message: "支付成功!",
+          });
+          axios({
+            method: "post",
+            url: this.globalAPI.order_pay,
+            headers: {
+              accesstoken: sessionStorage.accesstoken,
+            },
+            params: {
+              orderNumber: x,
+            },
+          })
+            .then((ref) => {
+              console.log("支付订单");
+              console.log(ref);
+            })
+            .catch((error) => {
+              console.log(error);
+            });
         })
-        .catch((error) => {
-          console.log(error);
+        .catch(() => {
+          this.$message({
+            type: "info",
+            message: "已取消支付",
+          });
         });
     },
   },
