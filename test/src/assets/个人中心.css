@@ -1,0 +1,98 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-color: #e4e3e3;
+}
+.outer10{
+    margin: 60px auto;
+    width: 1140px;
+    height: 803px;
+    background-color: #ffffff;
+
+}
+.time {
+    font-size: 13px;
+    color: #999;
+  }
+  
+  .bottom {
+    margin-top: 13px;
+    line-height: 12px;
+  }
+  
+  .button {
+    padding: 0;
+    float: right;
+  }
+  
+  .image {
+    width: 100%;
+    display: block;
+  }
+  
+  .clearfix:before,
+  .clearfix:after {
+    display: table;
+    content: "";
+  }
+  
+  .clearfix:after {
+    clear: both;
+  }
+  .own{
+      margin-left:60px;
+      margin-top: 20px;
+      width: 1000px;
+      height: 600px;
+   border-left:rgb(182, 172, 172) 1px solid ;
+    border-right:rgb(182, 172, 172) 1px solid ;
+     border-top:rgb(182, 172, 172) 1px solid ;
+   border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+  
+  }
+  .picture{
+      width: 150px;
+      height: 150px;
+      border: rgb(196, 192, 192) 1px solid;
+      border-radius: 150px;
+      position: relative;
+      left: 80px;
+      top: 30px;
+  }
+  .info{
+    width: 700px;
+    height: 360px;
+    border: red 1px solid;
+    border-radius: 15px;
+    position: relative;
+    left: 80px;
+    top: 50px;
+  }
+  .upload{
+    width: 500px;
+    height: 120px;
+    border: red 1px solid;
+    position: relative;
+    left: 250px;
+    top: -470px;
+ 
+  }
+  .updata_address{
+      width:800px ;
+      height: 200px;
+      border: red 1px solid;
+      position: relative;
+      left: 20px;
+      top: 20px;
+
+  }
+  .address{
+    margin-left:100px;
+    margin-top: 20px;
+    width: 900px;
+    height: 600px;
+
+  }
