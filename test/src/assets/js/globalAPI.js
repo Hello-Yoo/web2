@@ -1,6 +1,6 @@
-const http = 'http://139.9.69.82:8080' 
+// const http = 'http://139.9.69.82:8080' 
 // const http='http://192.168.43.165:8080'
-
+const http = 'http://47.111.73.242/api/user'
 const globalAPI = {
     // 用户信息
     user_info:http +'/v1/user/info/basic/get',
@@ -26,6 +26,15 @@ const globalAPI = {
     order:http+'/v1/order/list',
     //获取地址列表
     address_list:http+'/v1/user/info/address/list',
+    //获取订单详情
+    order_detail:http+'/v1/order/detail',
+    //取消订单
+    order_cancle:http+'/v1/order/cancle',
+    //删除订单
+    order_detele:http+'/v1/order/detele',
+    //支付订单
+    order_pay:http+'/v1/order/pay',
+
   }
 
 export  default globalAPI

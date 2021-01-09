@@ -114,19 +114,31 @@
                     :key="o"
                     :offset="index > 0 ? 2 : 0"
                   >
-                    <el-card :body-style="{ padding: '0px' }">
+                    <el-card :body-style="{ padding: '0px' }" v-for="(item,index) in order_list" :key='index'>
                       <img
-                        src="https://shadow.elemecdn.com/app/element/hamburger.9cf7b091-55e9-11e9-a976-7f4d0b07eef6.png"
+                        :src="item.goodsImgUrl"
                         class="image"
                       />
                       <div style="padding: 14px">
-                        <span>好吃的汉堡</span>
+                        <span>订单编号:{{item.orderNumber}}</span>
+                        <time class="time">{{ item.createTime }}</time>
+                        <span></span>
                         <div class="bottom clearfix">
-                          <time class="time">{{ currentDate }}</time>
-                          <el-button type="text" class="button">查看</el-button>
+                          
+                          <el-popover
+  placement="right"
+  width="400"
+  trigger="click">
+  <el-table :data="gridData">
+    <el-table-column width="150" property="date" label="日期"></el-table-column>
+    <el-table-column width="100" property="name" label="姓名"></el-table-column>
+    <el-table-column width="300" property="address" label="地址"></el-table-column>
+  </el-table>
+  <el-button type="text" class="button" @click="select()" slot="reference">查看</el-button>
+</el-popover>
+                          <el-button type="text" class="button" @click="select()">查看</el-button>
                           <el-button type="text" class="button">取消</el-button>
-                          <el-button type="text" class="button"
-                            >去支付</el-button
+                          <el-button type="text" class="button">去支付</el-button
                           >
                         </div>
                       </div>
@@ -414,6 +426,25 @@ export default {
       activeName: "second",
       currentDate: new Date(),
       input: "",
+      order_detail:[],
+      order_list:[],
+      gridData: [{
+          date: '2016-05-02',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-04',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-01',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }, {
+          date: '2016-05-03',
+          name: '王小虎',
+          address: '上海市普陀区金沙江路 1518 弄'
+        }]
     };
   },
   created() {
@@ -462,6 +493,7 @@ export default {
     })
       .then((ref) => {
         console.log('获取订单列表');
+        this.order_list=ref.data.data
         console.log(ref);
       })
       .catch((error) => {
@@ -472,6 +504,15 @@ export default {
     handleClick(tab, event) {
       console.log(tab, event);
     },
+    select(){
+      axios({
+        method:'get',
+        url:this.globalAPI.order_detail,
+        params:{
+          orderNumber:this
+        }
+      })
+    }
   },
 };
 </script>
