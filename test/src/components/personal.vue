@@ -100,13 +100,16 @@
                 <img src="" alt="" />
               </div>
 
-              <div class="info"></div>
+              <div class="info123"></div>
               <div class="upload"></div>
             </div>
           </el-tab-pane>
           <el-tab-pane label="个人订单管理" name="second">
-            <el-tabs tab-position="left" style="height: 600px;">
-              <el-tab-pane label="待付款" style="height: 600px; overflow-y:auto;overflow-x:hidden;">
+            <el-tabs tab-position="left" style="height: 600px">
+              <el-tab-pane
+                label="待付款"
+                style="height: 600px; overflow-y: auto; overflow-x: hidden"
+              >
                 <el-row>
                   <el-col
                     :span="8"
@@ -158,11 +161,13 @@
                           <el-button
                             type="text"
                             class="button"
-                            @click="select()"
-                            >查看</el-button
+                            @click="cancle(item.orderNumber)"
+                            >取消</el-button
                           >
-                          <el-button type="text" class="button">取消</el-button>
-                          <el-button type="text" class="button"
+                          <el-button
+                            type="text"
+                            class="button"
+                            @click="pay(item.orderNumber)"
                             >去支付</el-button
                           >
                         </div>
@@ -533,16 +538,67 @@ export default {
         params: {
           orderNumber: this,
         },
-      });
+        headers: {
+          accesstoken: sessionStorage.accesstoken,
+        },
+      })
+        .then((ref) => {
+          console.log("获取订单详情");
+          console.log(ref);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+
+    cancle(x) {
+      
+      axios({
+        method: "post",
+        url: this.globalAPI.order_cancle,
+        headers: {
+          accesstoken: sessionStorage.accesstoken,
+        },
+        data:{
+          orderNumber:x,
+        },
+      })
+        .then((ref) => {
+          console.log("取消订单");
+          console.log(x);
+          console.log(ref);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+    pay(x) {
+      axios({
+        method: "post",
+        url: this.globalAPI.order_pay,
+        headers: {
+          accesstoken: sessionStorage.accesstoken,
+        },
+        data: {
+          orderNumber: x,
+        },
+      })
+        .then((ref) => {
+          console.log("支付订单");
+          console.log(ref);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     },
   },
   computed: {
     panelCss: function () {
       return {
-        height: (this.order_list.length+1)
-      }
+        height: this.order_list.length + 1,
+      };
     },
-  }
+  },
 };
 </script>
 
