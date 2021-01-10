@@ -113,11 +113,12 @@
                 <el-row>
                   <el-col
                     :span="8"
-                    v-for="(o, index) in 2"
+                   style="display:flex;width:auto;flex-wrap: wrap;"
                     :key="o"
                     :offset="index > 0 ? 2 : 0"
                   >
                     <el-card
+                      style="width:400px"
                       :body-style="{ padding: '0px' }"
                       v-for="(item, index) in order_list"
                       :key="index"
@@ -184,11 +185,12 @@
                 ><el-row>
                   <el-col
                     :span="8"
-                    v-for="(o, index) in 2"
+                    style="display:flex;width:auto;flex-wrap: wrap;"
                     :key="o"
                     :offset="index > 0 ? 2 : 0"
                   >
                     <el-card
+                    style="width:400px"
                       :body-style="{ padding: '0px' }"
                       v-for="(item, index) in wait_order"
                       :key="index"
@@ -304,11 +306,12 @@
                 ><el-row>
                   <el-col
                     :span="8"
-                    v-for="(o, index) in 2"
+                    style="display:flex;width:auto;flex-wrap: wrap;"
                     :key="o"
                     :offset="index > 0 ? 2 : 0"
                   >
                     <el-card
+                    style="width:400px"
                       :body-style="{ padding: '0px' }"
                       v-for="(item, index) in cancled_order"
                       :key="index"
