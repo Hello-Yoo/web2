@@ -102,7 +102,7 @@
 				<input type="password" placeholder="登录密码" v-model="password">
 				<!-- 注册和忘记密码 -->
 				<p>
-					<a href="#" class = "l">
+					<a href="./registe" class = "l">
 						注册
 					</a>
 					<a href="#" class = "r">

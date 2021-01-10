@@ -298,7 +298,7 @@ import axios from 'axios';
 					console.log(111)
 					axios({
 					method:'post',
-					url:'http://192.168.43.165:8080/v1/user/register',
+					url:this.globalAPI.register,
 					data:{
 						userName:this.name,
 						pwd:this.password,

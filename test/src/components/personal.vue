@@ -124,7 +124,7 @@
                     >
                       <img :src="item.goodsImgUrl" class="image" />
                       <div style="padding: 14px">
-                        <span>订单编号:{{ item.orderNumber }}</span>
+                        <span>订单编号:{{ item.orderNumber }}</span> <br>
                         <time class="time">{{ item.createTime }}</time>
                         <span></span>
                         <div class="bottom clearfix">
@@ -195,7 +195,7 @@
                     >
                       <img :src="item.goodsImgUrl" class="image" />
                       <div style="padding: 14px">
-                        <span>订单编号:{{ item.orderNumber }}</span>
+                        <span>订单编号:{{ item.orderNumber }}</span><br>
                         <time class="time">{{ item.createTime }}</time>
                         <span></span>
                         <div class="bottom clearfix">
@@ -315,7 +315,7 @@
                     >
                       <img :src="item.goodsImgUrl" class="image" />
                       <div style="padding: 14px">
-                        <span>订单编号:{{ item.orderNumber }}</span>
+                        <span>订单编号:{{ item.orderNumber }}</span><br>
                         <time class="time">{{ item.createTime }}</time>
                         <span></span>
                         <div class="bottom clearfix">

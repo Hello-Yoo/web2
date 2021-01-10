@@ -355,7 +355,8 @@ import axios from 'axios'
             message: '添加成功!'
           });
                     }
-                        console.log(ref)
+						console.log(ref)
+						this.$router.push('./shop')
                 }).catch((error)=>{
                     console.log(error)
                 })

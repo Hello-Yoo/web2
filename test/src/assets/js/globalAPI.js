@@ -6,6 +6,8 @@ const globalAPI = {
     user_info:http +'/v1/user/info/basic/get',
     //登录
     login:http+'/v1/user/login',
+    //注册
+    register:http+'/v1/user/register',
     //所有商品类型 
     all_goods_type:http +'/v1/goods/type/list',
     //所有商品
